@@ -63,3 +63,6 @@ python main.py -u "https://example.com/video/main.m3u8" -n "我的视频"
 
 - 确保 FFmpeg 已安装并添加到系统路径中
 - 下载的视频仅供个人学习使用，请尊重版权
+
+## 致谢
+感谢 https://github.com/nemoTyrant/goose 项目提供思路
