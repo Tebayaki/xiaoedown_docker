@@ -1,3 +1,8 @@
+该fork将源仓库封装为Docker镜像，修改了部分代码，支持转码为自定义格式。使用方法：
+```bash
+URL='https://xxx.m3u8'
+docker run --rm -it -v ./course:/app/output xiaoedown -u $URL -n lesson1.mp4
+```
 # XiaoEDown
 
 XiaoEDown 是一个用于下载和合并小鹅通平台 M3U8 视频文件的工具。它支持加密和非加密的 M3U8 流，并使用 FFmpeg 将下载的片段合并为单个视频文件。

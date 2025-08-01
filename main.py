@@ -98,11 +98,11 @@ def download_chunks(key, urls):
     return len(urls)
 
 # Function to merge TS files using FFmpeg
-def merge_file(count):
+def merge_file(count, output):
     try:
         files = [f"{i}.ts" for i in range(count)]
         concat_str = '|'.join(files)
-        cmd = ['ffmpeg', '-i', f'concat:{concat_str}', '-c', 'copy', 'merge.ts', '-y']
+        cmd = ['ffmpeg', '-i', f'concat:{concat_str}', '-c', 'copy', output, '-y']
         print(f"Running: {' '.join(cmd)}")
         result = subprocess.run(cmd, capture_output=True, text=True)
         print(result.stdout)
@@ -129,6 +129,9 @@ def main():
     if not re.search(r'm3u8($|\?.*)', url):
         print("Please enter a valid M3U8 URL")
         sys.exit(1)
+    
+    if not new_name:
+        print("Please specify output file name")
 
     # Store original directory
     original_dir = os.getcwd()
@@ -144,14 +147,15 @@ def main():
         count = download_chunks(key, ts_urls)
 
         # 4. Merge TS files
-        merge_file(count)
+        output_dir = os.path.join(original_dir, 'output')
+        os.makedirs(output_dir, exist_ok=True)
+        output_path = os.path.join(output_dir, new_name)
+        merge_file(count, output_path)
 
         # 5. Rename and cleanup
-        output_name = f"{new_name}.ts" if new_name else "merge.ts"
-        os.rename('merge.ts', os.path.join('..', output_name))
         os.chdir(original_dir)
         shutil.rmtree(os.path.basename(url).split('.m3u8')[0])
-        print(f"Successfully created {output_name}")
+        print(f"Successfully created {new_name}")
 
     except Exception as e:
         print(f"Error: {e}")
