@@ -1,5 +1,8 @@
 该fork将源仓库封装为Docker镜像，修改了部分代码，支持转码为自定义格式。使用方法：
 ```bash
+docker pull tebayaki/xiaoedown:latest
+```
+```bash
 URL='https://xxx.m3u8'
 docker run --rm -it -v ./course:/app/output xiaoedown -u $URL -n lesson1.mp4
 ```
