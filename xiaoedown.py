@@ -2,7 +2,6 @@ import os
 import re
 import sys
 import shutil
-import argparse
 import requests
 import subprocess
 from concurrent.futures import ThreadPoolExecutor
@@ -115,15 +114,15 @@ def merge_file(count, output):
 def get_prefix(url):
     return url[:url.rfind('/') + 1]
 
-def main():
+def main(url, new_name):
     # Parse command-line arguments
-    parser = argparse.ArgumentParser(description="Download and merge M3U8 files.")
-    parser.add_argument('-u', '--url', required=True, help="M3U8 URL")
-    parser.add_argument('-n', '--name', default='', help="New name for the output file")
-    args = parser.parse_args()
+    # parser = argparse.ArgumentParser(description="Download and merge M3U8 files.")
+    # parser.add_argument('-u', '--url', required=True, help="M3U8 URL")
+    # parser.add_argument('-n', '--name', default='', help="New name for the output file")
+    # args = parser.parse_args()
 
-    url = args.url
-    new_name = args.name
+    # url = args.url
+    # new_name = args.name
 
     # Validate M3U8 URL
     if not re.search(r'm3u8($|\?.*)', url):
@@ -161,6 +160,3 @@ def main():
         print(f"Error: {e}")
         os.chdir(original_dir)
         sys.exit(1)
-
-if __name__ == "__main__":
-    main()
